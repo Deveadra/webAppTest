@@ -1,0 +1,117 @@
+
+nav a {
+    display: inline-block;
+    height: 100%;
+    padding: 15px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+
+html {
+    font-size: 16px;
+}
+
+html {
+  
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+  background-color: #f8eeec;
+}
+
+.main-img {
+    margin-top: -17px;
+    position: relative;
+    height: 600px;
+    width: 100%;    
+    background-image: url('../content/static/banner.png');
+    background-position: center;
+    background-size: cover;
+}
+
+.home-title {
+    position: absolute;
+    color: white;
+    font-size: 45px;
+    left: -58%;
+    /*left: 50%;
+    transform: translate(-50%);*/
+    top: 45%;
+    text-shadow: 0px 0px 5px black;
+}
+
+.title {
+    position: absolute;
+    color: white;
+    font-size: 40px;
+    left: 50%;
+    transform: translate(-50%);
+    top: 38%;
+    text-shadow: 0px 0px 8px black;
+}
+
+.container {    
+    max-width: 800px;
+    width: 100%
+    margin: auto;    
+    
+}
+
+.post {
+    margin: 5px;
+    display: flex;
+    position: relative;
+    height: 400px;
+    box-shadow: 0 0 10px 0 #828282;
+}
+
+    .post img {
+        max-width: 800px;
+        width: 100%;    
+        object-fit: cover;
+    }
+
+    .post-body {
+        margin: 15px 5px 35px;
+        background-color: white;
+        
+        
+    }
+
+    .no-shadow {
+        box-shadow: none;
+    }
+
+.comment-section {
+    margin: auto;
+    width: 100%;
+    max-width: 800px;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 0 3px 0 black;
+}
+
+.sign-in-form {
+    margin-top: 2rem;
+    display: flex;
+    /*these are going to go down*/
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.sign-in-form div {
+    max-width: 200px;
+    width: 100%;
+    margin-bottom: 1rem;
+    
+}

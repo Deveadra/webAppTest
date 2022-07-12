@@ -1,0 +1,28 @@
+﻿@model Post
+
+@{
+
+}
+
+<div>
+    <form asp-controller="Panel" asp-action="Edit" method="post" enctype="multipart/form-data" >
+        <input asp-form="Id" type="hidden" />
+        <div>
+            <label>Title</label>
+            <!--allows you to bring properties of your object/model to input fields-->
+            <input asp-for="Title" />
+        </div>
+
+        <div>
+            <label>Body</label>
+            <input asp-for="Body" />
+        </div>
+        
+        @*<div>
+            <label>Image</label>
+            <input asp-for="Image" />
+        </div>*@
+        
+        <input type="submit" value="Submit" />
+    </form>
+</div>

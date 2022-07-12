@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Post>
+
+@{
+
+}
+
+
+<div class="main-img">
+    <span class="home-title">Thessian</span>
+</div>
+
+
+<div class="container">
+    
+    @foreach(var post in Model)
+        {          <br />
+            var image_path = $"/Image/{post.Image}";
+            <a class="post" asp-controller="Home" asp-action="Post" asp-route-id="@post.Id">
+                <img src="@image_path" />
+                <span class="title">@post.Title</span>                
+            </a>
+        }
+
+
+    @*<ul>
+        @foreach(var post in Model)
+        {
+            <li>
+                <!--Going through the Home Controller, you want to get the post using its id-->
+                <a asp-controller="Home" asp-action="Post" asp-route-id="@post.Id">
+                    @post.Title
+                </a>
+                
+                <!--
+                <a asp-controller="Home" asp-action="Edit" asp-route-id="@post.Id">
+                    Edit
+                </a>
+                
+                <a asp-controller="Home" asp-action="Remove" asp-route-id="@post.Id">
+                    Remove
+                </a>
+                -->
+            </li>
+            
+        }
+    </ul>*@
+    
+
+ @* <ul>
+    @foreach(var post in Model)
+        {   
+       
+            var image_path = $"/Image/{post.Image}";
+            <li>
+            <a class="post" asp-controller="Home" asp-action="Post" asp-route-id="@post.Id">
+                <img src="@image_path" width="500"/>
+                <span class="title">@post.Title</span>                
+            </a>
+        </li>
+        }
+    </ul>*@
+
+</div>
