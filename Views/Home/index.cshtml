@@ -1,63 +1,100 @@
 ﻿@model IEnumerable<Post>
+@using System.Linq
 
 @{
-
+    var posts = Model?.ToList() ?? new List<Post>();
+    var featuredPost = posts.FirstOrDefault();
+    var totalComments = posts.Sum(p => p.MainComments?.Count ?? 0);
+    var latestPostDate = posts.Any() ? posts.Max(p => p.Created).ToString("MMM dd, yyyy") : "No posts yet";
+    var defaultPostImagePath = ViewData["DefaultPostImagePath"] as string ?? "/images/default-post.svg";
 }
 
+<section class="hero-section">
+    <div class="aurora-layer"></div>
+    <div class="hero-content">
+        <p class="eyebrow">Engineering Notes</p>
+        <h1>A modern ASP.NET Core blog experience.</h1>
+        <p class="hero-subtitle">
+            Built with maintainable structure, role-aware workflows, and a clean, responsive UI.
+        </p>
+        <div class="hero-actions">
+            <a class="btn btn-gradient" href="#insights">Explore capabilities</a>
+            @if (featuredPost is not null)
+            {
+                <a class="btn btn-outline-light" asp-controller="Home" asp-action="Post" asp-route-id="@featuredPost.Id">Read featured post</a>
+            }
+        </div>
+    </div>
+</section>
 
-<div class="main-img">
-    <span class="home-title">Thessian</span>
-</div>
+<section id="insights" class="metrics-grid reveal-on-scroll">
+    <article class="metric-card">
+        <p>Total Articles</p>
+        <h2 data-counter="@posts.Count">@posts.Count</h2>
+        <span>Structured content management</span>
+    </article>
+    <article class="metric-card">
+        <p>Main Discussions</p>
+        <h2 data-counter="@totalComments">@totalComments</h2>
+        <span>Community engagement architecture</span>
+    </article>
+    <article class="metric-card">
+        <p>Latest Delivery</p>
+        <h2 class="metric-date">@latestPostDate</h2>
+        <span>Continuous iteration mindset</span>
+    </article>
+</section>
 
+<section class="showcase-grid reveal-on-scroll">
+    <article class="showcase-card">
+        <h3>Architecture</h3>
+        <p>Clean separation across controllers, repository, and file services keeps change velocity high while containing complexity.</p>
+    </article>
+    <article class="showcase-card">
+        <h3>Access Control</h3>
+        <p>Role-based paths keep content operations and reader interactions clearly separated.</p>
+    </article>
+    <article class="showcase-card">
+        <h3>User Experience</h3>
+        <p>Consistent spacing, typography, and lightweight motion support a focused reading flow.</p>
+    </article>
+</section>
 
-<div class="container">
-    
-    @foreach(var post in Model)
-        {          <br />
-            var image_path = $"/Image/{post.Image}";
-            <a class="post" asp-controller="Home" asp-action="Post" asp-route-id="@post.Id">
-                <img src="@image_path" />
-                <span class="title">@post.Title</span>                
-            </a>
-        }
+<section class="post-feed reveal-on-scroll">
+    <div class="section-header">
+        <h2>Latest Posts</h2>
+        <p>Browse recent updates, implementation notes, and product changes.</p>
+    </div>
 
+    @if (!posts.Any())
+    {
+        <div class="empty-state">
+            <h3>No posts have been published yet.</h3>
+            <p>Create your first post in the admin panel to start showcasing the roadmap.</p>
+        </div>
+    }
+    else
+    {
+        <div class="post-grid">
+            @foreach (var post in posts)
+            {
+                var imagePath = !string.IsNullOrWhiteSpace(post.Image) ? $"/Image/{post.Image}" : defaultPostImagePath;
+                var preview = string.IsNullOrWhiteSpace(post.Body)
+                    ? "Read the full update to understand architecture, trade-offs, and delivery strategy."
+                    : (post.Body.Length > 160 ? post.Body.Substring(0, 160) + "..." : post.Body);
 
-    @*<ul>
-        @foreach(var post in Model)
-        {
-            <li>
-                <!--Going through the Home Controller, you want to get the post using its id-->
-                <a asp-controller="Home" asp-action="Post" asp-route-id="@post.Id">
-                    @post.Title
+                <a class="post-card" asp-controller="Home" asp-action="Post" asp-route-id="@post.Id">
+                    <div class="post-media">
+                        <img src="@imagePath" alt="@post.Title" />
+                    </div>
+                    <div class="post-content">
+                        <p class="post-date">@post.Created.ToString("MMM dd, yyyy")</p>
+                        <h3>@post.Title</h3>
+                        <p>@preview</p>
+                        <span class="read-more">Open article →</span>
+                    </div>
                 </a>
-                
-                <!--
-                <a asp-controller="Home" asp-action="Edit" asp-route-id="@post.Id">
-                    Edit
-                </a>
-                
-                <a asp-controller="Home" asp-action="Remove" asp-route-id="@post.Id">
-                    Remove
-                </a>
-                -->
-            </li>
-            
-        }
-    </ul>*@
-    
-
- @* <ul>
-    @foreach(var post in Model)
-        {   
-       
-            var image_path = $"/Image/{post.Image}";
-            <li>
-            <a class="post" asp-controller="Home" asp-action="Post" asp-route-id="@post.Id">
-                <img src="@image_path" width="500"/>
-                <span class="title">@post.Title</span>                
-            </a>
-        </li>
-        }
-    </ul>*@
-
-</div>
+            }
+        </div>
+    }
+</section>
