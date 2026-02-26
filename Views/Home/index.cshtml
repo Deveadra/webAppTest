@@ -6,15 +6,16 @@
     var featuredPost = posts.FirstOrDefault();
     var totalComments = posts.Sum(p => p.MainComments?.Count ?? 0);
     var latestPostDate = posts.Any() ? posts.Max(p => p.Created).ToString("MMM dd, yyyy") : "No posts yet";
+    var defaultPostImagePath = ViewData["DefaultPostImagePath"] as string ?? "/images/default-post.svg";
 }
 
 <section class="hero-section">
     <div class="aurora-layer"></div>
     <div class="hero-content">
-        <p class="eyebrow">Technical Leadership Showcase</p>
-        <h1>From legacy prototype to modern product vision.</h1>
+        <p class="eyebrow">Engineering Notes</p>
+        <h1>A modern ASP.NET Core blog experience.</h1>
         <p class="hero-subtitle">
-            This platform demonstrates production-minded architecture, role-aware workflows, and a polished user experience designed to impress engineering leadership.
+            Built with maintainable structure, role-aware workflows, and a clean, responsive UI.
         </p>
         <div class="hero-actions">
             <a class="btn btn-gradient" href="#insights">Explore capabilities</a>
@@ -46,23 +47,23 @@
 
 <section class="showcase-grid reveal-on-scroll">
     <article class="showcase-card">
-        <h3>System Thinking</h3>
+        <h3>Architecture</h3>
         <p>Clean separation across controllers, repository, and file services keeps change velocity high while containing complexity.</p>
     </article>
     <article class="showcase-card">
-        <h3>Leadership Signals</h3>
-        <p>Role-based access and collaboration flows reflect real-world decisions expected from technical leads managing risk and delivery.</p>
+        <h3>Access Control</h3>
+        <p>Role-based paths keep content operations and reader interactions clearly separated.</p>
     </article>
     <article class="showcase-card">
-        <h3>Execution Quality</h3>
-        <p>Responsive visual language, reusable components, and motion design combine to create a confident product narrative.</p>
+        <h3>User Experience</h3>
+        <p>Consistent spacing, typography, and lightweight motion support a focused reading flow.</p>
     </article>
 </section>
 
 <section class="post-feed reveal-on-scroll">
     <div class="section-header">
-        <h2>Featured Engineering Stories</h2>
-        <p>Every post represents a design decision, implementation detail, or leadership takeaway.</p>
+        <h2>Latest Posts</h2>
+        <p>Browse recent updates, implementation notes, and product changes.</p>
     </div>
 
     @if (!posts.Any())
@@ -77,7 +78,7 @@
         <div class="post-grid">
             @foreach (var post in posts)
             {
-                var imagePath = !string.IsNullOrWhiteSpace(post.Image) ? $"/Image/{post.Image}" : "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80";
+                var imagePath = !string.IsNullOrWhiteSpace(post.Image) ? $"/Image/{post.Image}" : defaultPostImagePath;
                 var preview = string.IsNullOrWhiteSpace(post.Body)
                     ? "Read the full update to understand architecture, trade-offs, and delivery strategy."
                     : (post.Body.Length > 160 ? post.Body.Substring(0, 160) + "..." : post.Body);

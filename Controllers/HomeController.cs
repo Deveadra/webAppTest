@@ -16,6 +16,8 @@ namespace Blog.Controllers
 {
     public class HomeController : Controller
     {
+        private const string DefaultPostImagePath = "/images/default-post.svg";
+
         private IRepository _repo;
         private IFileManager _fileManager;
 
@@ -28,6 +30,7 @@ namespace Blog.Controllers
 
         public IActionResult Index()
         {
+            ViewData["DefaultPostImagePath"] = DefaultPostImagePath;
             var posts = _repo.GetAllPost();
             return View(posts);
         }

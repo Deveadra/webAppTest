@@ -1,7 +1,7 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
     const revealTargets = document.querySelectorAll('.reveal-on-scroll');
 
-    if (revealTargets.length) {
+    if (revealTargets.length && 'IntersectionObserver' in window) {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
@@ -12,6 +12,8 @@
         }, { threshold: 0.2 });
 
         revealTargets.forEach((target) => observer.observe(target));
+    } else {
+        revealTargets.forEach((target) => target.classList.add('revealed'));
     }
 
     const counters = document.querySelectorAll('[data-counter]');
