@@ -69,8 +69,16 @@ namespace Blog.Controllers
                 Title = vm.Title,
                 //Author = User.Identity.Name,
                 Body = vm.Body,
-                Image = await _fileManager.SaveImage(vm.Image) //Handles Image and populates it with a string
             };
+
+            if (vm.Image != null)
+            {
+                post.Image = await _fileManager.SaveImage(vm.Image);
+            }
+            else if (vm.Id > 0)
+            {
+                post.Image = _repo.GetPost(vm.Id).Image;
+            }
 
             if (post.Id > 0)
             {
